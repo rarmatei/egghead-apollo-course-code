@@ -16,6 +16,14 @@ function UiNotesList({ notes, onDelete, onSelect }) {
           <Flex h="100%" justify="space-between" marginBottom="10px">
             <Flex flex="1" h="100%" justify="space-around" direction="column">
               <Text>{note.content}</Text>
+              {note.category && (
+                <Flex>
+                  <Text fontWeight="bold" marginRight={2}>
+                    Category:{" "}
+                  </Text>{" "}
+                  <Text>{note.category.label}</Text>
+                </Flex>
+              )}
             </Flex>
           </Flex>
         </Box>
