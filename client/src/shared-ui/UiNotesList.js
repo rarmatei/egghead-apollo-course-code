@@ -10,7 +10,6 @@ function UiNotesList({ notes, onDelete, onSelect }) {
           background={note.isSelected ? "#EDFDFD" : ""}
           key={note.id}
           p={2}
-          h={100}
           shadow="md"
           borderWidth="3px"
         >

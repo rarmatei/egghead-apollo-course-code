@@ -1,5 +1,4 @@
 import { gql, useQuery } from "@apollo/client";
-import { Stack } from "@chakra-ui/react";
 import { UiNotesList } from "./shared-ui/UiNotesList";
 
 const ALL_NOTES_QUERY = gql`
@@ -13,12 +12,7 @@ const ALL_NOTES_QUERY = gql`
 
 function NoteList() {
   const { data } = useQuery(ALL_NOTES_QUERY);
-  console.log({ data });
-  return (
-    <Stack>
-      <UiNotesList notes={data?.notes}></UiNotesList>
-    </Stack>
-  );
+  return <UiNotesList notes={data?.notes}></UiNotesList>;
 }
 
 export { NoteList };

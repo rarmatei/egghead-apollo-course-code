@@ -49,24 +49,19 @@ let categories = [
 ];
 
 let allNotes = [
-  { id: "1", content: "🍋 Lemons", categoryId: "1" },
-  { id: "2", content: "🥑 Avocados", categoryId: "1" },
-  { id: "3", content: "🍌 Bananas", categoryId: "1" },
-  { id: "4", content: "🥥 Coconut water", categoryId: "1" },
-  { id: "5", content: "🍞 Bread", categoryId: "1" },
-  { id: "6", content: "🍎 Apples", categoryId: "1" },
-  { id: "7", content: "Walnuts", categoryId: "1" },
-  { id: "8", content: "Oats", categoryId: "1" },
+  { id: "1", content: "Shopping list item: 🍋 Lemons", categoryId: "1" },
+  { id: "2", content: "Shopping list item:  🥑 Avocados", categoryId: "1" },
   {
     id: "9",
-    content: "Book Italy flight.",
+    content:
+      "✈️ Italy trip ideas: A day in Milan opens up a grand Gothic Duomo (cathedral), Leonardo Da Vinci's Last Supper and world-class opera at La Scala. A short train ride away, belle époque Lake Maggiore harbours the beguiling Borromean Islands...",
     categoryId: "3",
   },
   {
-    id: "10",
+    id: "14",
     content:
-      "The first person who inhaled helium must have been so relieved when the effects wore off",
-    categoryId: "2",
+      "🍾 Ideas for wedding venues: Set within the beautiful surroundings of Bellahouston Park, House for an Art Lover is a truly unique wedding venue in Glasgow. Their exclusive-use Mackintosh Suite is inspired by Scotland’s most beloved artist, Charles Rennie Mackintosh, and is full of photo-worthy spots. ",
+    categoryId: "1",
   },
 ];
 
@@ -166,11 +161,6 @@ let unpublishedSharedNotes = [
     id: "13",
     content: "From Rares - Apollo course lesson 1 draft",
     categoryId: "2",
-  },
-  {
-    id: "14",
-    content: "From Tom - Adding some venues we can book for the wedding...",
-    categoryId: "1",
   },
   {
     id: "15",
