@@ -58,12 +58,12 @@ let allNotes = [
     categoryId: "3",
   },
   {
-    id: "9",
+    id: "10",
     content: "Book Italy flight.",
     categoryId: "3",
   },
   {
-    id: "9",
+    id: "11",
     content: "Book return flights.",
     categoryId: "3",
   },
