@@ -1,6 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 import { UiNotesList } from "./shared-ui/UiNotesList";
-import { Spinner } from "@chakra-ui/react";
+import { Heading, Spinner } from "@chakra-ui/react";
 
 const ALL_NOTES_QUERY = gql`
   query GetAllNotes($categoryId: String) {
@@ -15,11 +15,16 @@ const ALL_NOTES_QUERY = gql`
 `;
 
 export function NoteList({ categoryId }) {
-  const { data, loading } = useQuery(ALL_NOTES_QUERY, {
+  const { data, loading, error } = useQuery(ALL_NOTES_QUERY, {
     variables: {
       categoryId,
     },
+    errorPolicy: "all",
   });
+  console.log({ data });
+  if (error && !data) {
+    return <Heading>Could not load notes.</Heading>;
+  }
   if (loading) {
     return <Spinner />;
   }
