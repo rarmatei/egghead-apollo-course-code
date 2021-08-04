@@ -1,6 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
-import { UiNotesList } from "./shared-ui/UiNotesList";
-import { Heading, Spinner } from "@chakra-ui/react";
+import { Box, Flex, Heading, Spinner, Stack, Text } from "@chakra-ui/react";
+import { UiNote } from "./shared-ui/UiNote";
 
 const ALL_NOTES_QUERY = gql`
   query GetAllNotes($categoryId: String) {
@@ -28,5 +28,17 @@ export function NoteList({ categoryId }) {
   if (loading) {
     return <Spinner />;
   }
-  return <UiNotesList notes={data?.notes}></UiNotesList>;
+  return (
+    <Stack width={300} spacing={4}>
+      {data.notes
+        .filter((note) => !!note)
+        .map((note) => (
+          <UiNote
+            key={note.id}
+            category={note.category.label}
+            content={note.content}
+          ></UiNote>
+        ))}
+    </Stack>
+  );
 }
