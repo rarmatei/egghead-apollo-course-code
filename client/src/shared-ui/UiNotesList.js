@@ -4,7 +4,7 @@ import { DeleteIcon, EditIcon, TriangleDownIcon } from "@chakra-ui/icons";
 
 function UiNotesList({ notes, onDelete, onSelect }) {
   return (
-    <Stack spacing={4}>
+    <Stack width={300} spacing={4}>
       {notes?.map((note) => (
         <Box
           background={note.isSelected ? "#EDFDFD" : ""}

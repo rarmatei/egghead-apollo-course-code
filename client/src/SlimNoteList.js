@@ -6,14 +6,11 @@ const ALL_NOTES_QUERY = gql`
     notes {
       id
       content
-      category {
-        label
-      }
     }
   }
 `;
 
-export function NoteList() {
+export function SlimNoteList() {
   const { data } = useQuery(ALL_NOTES_QUERY, {
     fetchPolicy: "network-only",
   });
