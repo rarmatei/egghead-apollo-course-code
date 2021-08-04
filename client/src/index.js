@@ -1,13 +1,32 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import {
+  ApolloClient,
+  ApolloProvider,
+  from,
+  HttpLink,
+  InMemoryCache,
+} from "@apollo/client";
 import { ChakraProvider } from "@chakra-ui/react";
 import { BrowserRouter } from "react-router-dom";
+import { RetryLink } from "@apollo/client/link/retry";
+
+const httpLink = new HttpLink({
+  uri: "http://localhost:4000/graphql",
+});
+
+const retryLink = new RetryLink({
+  delay: {
+    initial: 2000,
+    max: 2000,
+    jitter: false,
+  },
+});
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-  uri: "http://localhost:4000/graphql",
+  link: from([retryLink, httpLink]),
 });
 ReactDOM.render(
   <React.StrictMode>
