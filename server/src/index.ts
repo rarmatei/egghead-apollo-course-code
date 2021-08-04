@@ -77,13 +77,16 @@ const resolvers = {
   },
   Query: {
     notes: (root, args, context) => {
-      if (!args.categoryId && !args.offset && !args.limit) {
+      if (!args.categoryId) {
         return allNotes;
       }
       const categorisedNotes = args.categoryId
         ? allNotes.filter((note) => note.categoryId === args.categoryId)
         : allNotes;
-      return categorisedNotes.slice(args.offset, args.offset + args.limit);
+      if (args.offset !== undefined && args.offset !== null && args.limit) {
+        return categorisedNotes.slice(args.offset, args.offset + args.limit);
+      }
+      return categorisedNotes;
     },
     note: (root, args, context) => {
       const noteId = args.id;

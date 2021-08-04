@@ -1,20 +1,19 @@
 import { NoteList } from "./NoteList";
-import { Box, Button, Flex } from "@chakra-ui/react";
-import { SlimNoteList } from "./SlimNoteList";
+import { Stack, Text } from "@chakra-ui/react";
 import { useState } from "react";
+import { SelectCategory } from "./SelectCategory";
 
 function MainNotesContainer() {
-  const [slimListOpen, setSlimListOpen] = useState(false);
+  const [notesCategory, setNotesCategory] = useState("1");
   return (
-    <Flex>
-      <NoteList />
-      <Box width="300px" paddingLeft="50px">
-        <Button onClick={() => setSlimListOpen(!slimListOpen)}>
-          Open List
-        </Button>
-        {slimListOpen && <SlimNoteList />}
-      </Box>
-    </Flex>
+    <Stack>
+      <SelectCategory
+        defaultValue={notesCategory}
+        onCategoryChange={(categoryId) => setNotesCategory(categoryId)}
+      />
+      <Text>Selected Category ID: {notesCategory}</Text>
+      <NoteList categoryId={notesCategory} />
+    </Stack>
   );
 }
 

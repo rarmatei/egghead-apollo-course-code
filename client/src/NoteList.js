@@ -2,8 +2,8 @@ import { gql, useQuery } from "@apollo/client";
 import { UiNotesList } from "./shared-ui/UiNotesList";
 
 const ALL_NOTES_QUERY = gql`
-  query GetAllNotes {
-    notes {
+  query GetAllNotes($categoryId: String) {
+    notes(categoryId: $categoryId) {
       id
       content
       category {
@@ -13,9 +13,11 @@ const ALL_NOTES_QUERY = gql`
   }
 `;
 
-export function NoteList() {
+export function NoteList({ categoryId }) {
   const { data } = useQuery(ALL_NOTES_QUERY, {
-    fetchPolicy: "network-only",
+    variables: {
+      categoryId,
+    },
   });
   return <UiNotesList notes={data?.notes}></UiNotesList>;
 }
