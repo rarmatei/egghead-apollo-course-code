@@ -30,7 +30,7 @@ export function NoteList({ categoryId }) {
     return <Spinner />;
   }
   return (
-    <Stack width={300} spacing={4}>
+    <Stack spacing={4}>
       {data.notes
         .filter((note) => !!note)
         .map((note) => (

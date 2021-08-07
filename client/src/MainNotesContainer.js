@@ -6,12 +6,11 @@ import { SelectCategory } from "./SelectCategory";
 function MainNotesContainer() {
   const [notesCategory, setNotesCategory] = useState("1");
   return (
-    <Stack>
+    <Stack width={400}>
       <SelectCategory
         defaultValue={notesCategory}
         onCategoryChange={(categoryId) => setNotesCategory(categoryId)}
       />
-      <Text>Selected Category ID: {notesCategory}</Text>
       <NoteList categoryId={notesCategory} />
     </Stack>
   );
