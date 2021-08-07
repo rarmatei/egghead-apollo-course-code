@@ -3,7 +3,7 @@ import { EditIcon } from "@chakra-ui/icons";
 
 function UiEditCategoriesButton({ onClick }) {
   return (
-    <Button marginLeft={5} flex={1} leftIcon={<EditIcon />} onClick={onClick}>
+    <Button size="sm" leftIcon={<EditIcon />} onClick={onClick}>
       Edit Categories
     </Button>
   );
