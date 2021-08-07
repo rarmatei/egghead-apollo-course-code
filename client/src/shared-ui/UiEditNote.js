@@ -7,7 +7,7 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 
-function UiEditNote({ note, onSave }) {
+function UiEditNote({ note, onSave, isSaving }) {
   function save(e) {
     e.preventDefault();
     const newContent = e.target.elements.noteContents.value;
@@ -25,7 +25,7 @@ function UiEditNote({ note, onSave }) {
       </Heading>
       <form onSubmit={save}>
         <Textarea key={note.id} id="noteContents" defaultValue={note.content} />
-        <Button type="submit" colorScheme="blue">
+        <Button isLoading={isSaving} type="submit" colorScheme="blue">
           Save
         </Button>
       </form>
