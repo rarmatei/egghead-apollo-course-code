@@ -25,6 +25,10 @@ export function EditNote() {
       mutation UpdateNote($id: String!, $content: String!) {
         updateNote(id: $id, content: $content) {
           successful
+          note {
+            id
+            content
+          }
         }
       }
     `
