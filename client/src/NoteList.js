@@ -38,7 +38,21 @@ export function NoteList({ categoryId }) {
   });
 
   const [deleteNote] = useMutation(DELETE_NOTE_MUTATION, {
-    refetchQueries: ["GetAllNotes"],
+    // refetchQueries: ["GetAllNotes"],
+    update(cache, element) {
+      const deletedNoteIdentifier = cache.identify(
+        element.data?.deleteNote.note
+      );
+      cache.modify({
+        fields: {
+          notes(existingNotes) {
+            return existingNotes.filter(
+              (note) => deletedNoteIdentifier !== cache.identify(note)
+            );
+          },
+        },
+      });
+    },
   });
 
   if (error && !data) {
