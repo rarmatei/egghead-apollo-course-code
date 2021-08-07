@@ -52,6 +52,7 @@ export function NoteList({ categoryId }) {
           },
         },
       });
+      cache.evict({ id: deletedNoteIdentifier });
     },
   });
 
