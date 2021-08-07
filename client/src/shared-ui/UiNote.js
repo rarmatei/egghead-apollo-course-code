@@ -6,6 +6,7 @@ export function UiNote({ isSelected, content, category, children }) {
       background={isSelected ? "#EDFDFD" : ""}
       p={2}
       shadow="md"
+      height={100}
       borderWidth="3px"
     >
       <Flex h="100%" justify="space-between" marginBottom="10px">
