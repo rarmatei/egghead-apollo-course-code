@@ -6,6 +6,7 @@ import {
   Text,
   Textarea,
 } from "@chakra-ui/react";
+import { UiNotFound } from "./UiNotFound";
 
 function UiEditNote({ note, onSave, isSaving }) {
   function save(e) {
@@ -14,7 +15,7 @@ function UiEditNote({ note, onSave, isSaving }) {
     onSave(newContent);
   }
   if (!note) {
-    return null;
+    return <UiNotFound />;
   }
   return (
     <Box
