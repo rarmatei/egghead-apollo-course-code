@@ -23,7 +23,7 @@ function UiEditCategories({ categories, onEditCategory }) {
       </Flex>
       <UiCollapse isOpen={isOpen}>
         <Box padding="10px">
-          {categories.map((category) => (
+          {categories?.map((category) => (
             <form
               key={category.id}
               onSubmit={(e) => saveCategory(e, category.id)}

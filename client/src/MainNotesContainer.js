@@ -9,7 +9,7 @@ function MainNotesContainer() {
   return (
     <Stack width={400}>
       <SelectCategory
-        defaultValue={notesCategory}
+        value={notesCategory}
         onCategoryChange={(categoryId) => setNotesCategory(categoryId)}
       />
       <EditCategories />

@@ -1,19 +1,26 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { gql } from "@apollo/client/core";
 import { UiEditCategories } from "./shared-ui/UiEditCategories";
-import { Spinner } from "@chakra-ui/react";
+import { ALL_CATEGORIES_QUERY } from "./SelectCategory";
 
 export function EditCategories() {
-  const mockCategories = [
-    { id: "mockId-1", label: "mock category 1" },
-    { id: "mockId-2", label: "mock category 2" },
-    { id: "mockId-3", label: "mock category 3" },
-  ];
+  const { data } = useQuery(ALL_CATEGORIES_QUERY);
+
+  const [updateCategory] = useMutation(gql`
+    mutation UpdateCategory($categoryId: String!, $categoryLabel: String!) {
+      updateCategory(id: $categoryId, label: $categoryLabel) {
+        id
+        label
+      }
+    }
+  `);
   return (
     <UiEditCategories
-      categories={mockCategories}
+      categories={data?.categories}
       onEditCategory={({ id, label }) =>
-        console.log("edited category: ", { id, label })
+        updateCategory({
+          variables: { categoryId: id, categoryLabel: label },
+        })
       }
     />
   );

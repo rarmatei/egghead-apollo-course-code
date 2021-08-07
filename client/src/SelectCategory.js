@@ -1,26 +1,30 @@
-import { Box, Select } from "@chakra-ui/react";
+import { Select } from "@chakra-ui/react";
+import { gql } from "@apollo/client/core";
+import { useQuery } from "@apollo/client";
 
-function SelectCategory({ onCategoryChange, defaultValue }) {
-  const categories = [
-    { id: "1", label: "🛒 Shopping" },
-    { id: "2", label: "💭 Random thoughts" },
-    { id: "3", label: "✈️ Holiday Planning" },
-  ];
+export const ALL_CATEGORIES_QUERY = gql`
+  query GetCategories {
+    categories {
+      id
+      label
+    }
+  }
+`;
+
+export function SelectCategory({ onCategoryChange, value }) {
+  const { data } = useQuery(ALL_CATEGORIES_QUERY);
+
   return (
-    <Box>
-      <Select
-        placeholder="Select Category"
-        defaultValue={defaultValue}
-        onChange={(e) => onCategoryChange(e.target.value)}
-      >
-        {categories.map((category) => (
-          <option key={category.id} value={category.id}>
-            {category.label}
-          </option>
-        ))}
-      </Select>
-    </Box>
+    <Select
+      placeholder="Select Category"
+      value={value}
+      onChange={(e) => onCategoryChange(e.target.value)}
+    >
+      {data?.categories.map((category) => (
+        <option key={category.id} value={category.id}>
+          {category.label}
+        </option>
+      ))}
+    </Select>
   );
 }
-
-export { SelectCategory };
