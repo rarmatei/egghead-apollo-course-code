@@ -1,6 +1,6 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 
-export function UiNote({ isSelected, content, category }) {
+export function UiNote({ isSelected, content, category, children }) {
   return (
     <Box
       background={isSelected ? "#EDFDFD" : ""}
@@ -19,6 +19,9 @@ export function UiNote({ isSelected, content, category }) {
               <Text>{category}</Text>
             </Flex>
           )}
+        </Flex>
+        <Flex justify="space-around" height="100%" direction="column">
+          {children}
         </Flex>
       </Flex>
     </Box>

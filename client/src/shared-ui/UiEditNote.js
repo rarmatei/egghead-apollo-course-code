@@ -25,7 +25,6 @@ function UiEditNote({ note, onSave }) {
       </Heading>
       <form onSubmit={save}>
         <Textarea key={note.id} id="noteContents" defaultValue={note.content} />
-        <Text padding="10px 0">Selected: {note.isSelected ? "yes" : "no"}</Text>
         <Button type="submit" colorScheme="blue">
           Save
         </Button>

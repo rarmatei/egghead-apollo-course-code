@@ -1,6 +1,8 @@
 import { gql, useQuery } from "@apollo/client";
 import { Heading, Spinner, Stack, Text } from "@chakra-ui/react";
 import { UiNote } from "./shared-ui/UiNote";
+import { ViewNoteButton } from "./shared-ui/ViewButton";
+import { Link } from "react-router-dom";
 
 const ALL_NOTES_QUERY = gql`
   query GetAllNotes($categoryId: String) {
@@ -36,7 +38,11 @@ export function NoteList({ categoryId }) {
             key={note.id}
             category={note.category.label}
             content={note.content}
-          ></UiNote>
+          >
+            <Link to={`/note/${note.id}`}>
+              <ViewNoteButton />
+            </Link>
+          </UiNote>
         ))}
     </Stack>
   );
