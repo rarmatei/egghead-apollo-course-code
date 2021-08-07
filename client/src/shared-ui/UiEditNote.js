@@ -13,6 +13,9 @@ function UiEditNote({ note, onSave, isSaving }) {
     const newContent = e.target.elements.noteContents.value;
     onSave(newContent);
   }
+  if (!note) {
+    return null;
+  }
   return (
     <Box
       background={note.isSelected ? "#EDFDFD" : ""}
