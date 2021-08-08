@@ -24,6 +24,8 @@ const retryLink = new RetryLink({
   },
 });
 
+let selectedNoteIds = ["1", "2"];
+
 const cache = new InMemoryCache({
   typePolicies: {
     Query: {
@@ -39,8 +41,10 @@ const cache = new InMemoryCache({
     Note: {
       fields: {
         isSelected: {
-          read() {
-            return true;
+          read(currentIsSelectedValue, helpers) {
+            const currentNoteId = helpers.readField("id");
+            console.log({ currentNoteId });
+            return selectedNoteIds.includes(currentNoteId);
           },
         },
       },
