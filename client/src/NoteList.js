@@ -39,6 +39,19 @@ export function NoteList({ categoryId }) {
 
   const [deleteNote] = useMutation(DELETE_NOTE_MUTATION, {
     // refetchQueries: ["GetAllNotes"],
+    optimisticResponse: (vars) => {
+      return {
+        optimistic: true,
+        deleteNote: {
+          __typename: "DeleteNoteResponse",
+          successful: true,
+          note: {
+            id: vars.noteId,
+            __typename: "Note",
+          },
+        },
+      };
+    },
     update(cache, element) {
       const deletedNoteIdentifier = cache.identify(
         element.data?.deleteNote.note
@@ -52,7 +65,9 @@ export function NoteList({ categoryId }) {
           },
         },
       });
-      cache.evict({ id: deletedNoteIdentifier });
+      if (!element.data.optimistic) {
+        cache.evict({ id: deletedNoteIdentifier });
+      }
     },
   });
 
@@ -76,7 +91,11 @@ export function NoteList({ categoryId }) {
               <ViewNoteButton />
             </Link>
             <DeleteButton
-              onClick={() => deleteNote({ variables: { noteId: note.id } })}
+              onClick={() =>
+                deleteNote({ variables: { noteId: note.id } }).catch((e) =>
+                  console.error(e)
+                )
+              }
             />
           </UiNote>
         ))}

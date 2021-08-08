@@ -122,6 +122,9 @@ const resolvers = {
     },
     deleteNote: (root, args, context) => {
       const noteId = args.id;
+      if (noteId === "14") {
+        throw new Error("Cannot delete note with ID 14");
+      }
       const deletedNote = allNotes.find((note) => note.id === noteId);
       allNotes = allNotes.filter((n) => n.id !== noteId);
       return {
