@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import { DeleteButton } from "./shared-ui/DeleteButton";
 import { UiLoadMoreButton } from "./shared-ui/UiLoadMoreButton";
 import { toggleNote } from "./index";
+import { useEffect } from "react";
 
 const REST_ALL_NOTES_QUERY = gql`
   query GetAllNotes($categoryId: String, $offset: Int, $limit: Int) {
@@ -74,14 +75,17 @@ const DELETE_NOTE_MUTATION = gql`
 `;
 
 export function NoteList({ categoryId }) {
-  const { data, loading, error, fetchMore } = useQuery(ALL_NOTES_QUERY, {
-    variables: {
-      categoryId,
-      offset: 0,
-      limit: 3,
-    },
-    errorPolicy: "all",
-  });
+  const { data, loading, error, fetchMore, subscribeToMore } = useQuery(
+    ALL_NOTES_QUERY,
+    {
+      variables: {
+        categoryId,
+        offset: 0,
+        limit: 3,
+      },
+      errorPolicy: "all",
+    }
+  );
 
   const [deleteNote] = useMutation(DELETE_NOTE_MUTATION, {
     // refetchQueries: ["GetAllNotes"],
@@ -117,37 +121,31 @@ export function NoteList({ categoryId }) {
     },
   });
 
-  const { data: newNoteData } = useSubscription(
-    gql`
-      subscription NewSharedNote($categoryId: String) {
-        newSharedNote(categoryId: $categoryId) {
-          id
-          content
-          category {
+  useEffect(() => {
+    const unsubscribe = subscribeToMore({
+      document: gql`
+        subscription NewSharedNote($categoryId: String) {
+          newSharedNote(categoryId: $categoryId) {
             id
-            label
+            content
+            category {
+              id
+              label
+            }
           }
         }
-      }
-    `,
-    {
+      `,
       variables: { categoryId },
-    }
-  );
-  const newNote = newNoteData?.newSharedNote;
-  let recentChanges = null;
-  if (newNote) {
-    recentChanges = (
-      <>
-        <Text>Recent changes: </Text>
-        <UiNote
-          category={newNote.category.label}
-          content={newNote.content}
-        ></UiNote>
-        <Divider />
-      </>
-    );
-  }
+      updateQuery: (previousQueryResult, { subscriptionData }) => {
+        const newNote = subscriptionData.data.newSharedNote;
+        return {
+          ...previousQueryResult,
+          notes: [newNote, ...previousQueryResult.notes],
+        };
+      },
+    });
+    return unsubscribe;
+  }, [categoryId]);
 
   if (error && !data) {
     return <Heading>Could not load notes.</Heading>;
@@ -157,7 +155,6 @@ export function NoteList({ categoryId }) {
   }
   return (
     <Stack spacing={4}>
-      {recentChanges}
       {data.notes
         .filter((note) => !!note)
         .map((note) => (
