@@ -1,4 +1,10 @@
-import { gql, useMutation, useQuery, useSubscription } from "@apollo/client";
+import {
+  gql,
+  useApolloClient,
+  useMutation,
+  useQuery,
+  useSubscription,
+} from "@apollo/client";
 import {
   Checkbox,
   Divider,
@@ -121,6 +127,8 @@ export function NoteList({ categoryId }) {
     },
   });
 
+  const client = useApolloClient();
+
   useEffect(() => {
     const unsubscribe = subscribeToMore({
       document: gql`
@@ -138,10 +146,13 @@ export function NoteList({ categoryId }) {
       variables: { categoryId },
       updateQuery: (previousQueryResult, { subscriptionData }) => {
         const newNote = subscriptionData.data.newSharedNote;
-        return {
-          ...previousQueryResult,
-          notes: [newNote, ...previousQueryResult.notes],
-        };
+        client.cache.modify({
+          fields: {
+            notes: (existingNotes) => {
+              return [newNote, ...existingNotes];
+            },
+          },
+        });
       },
     });
     return unsubscribe;
