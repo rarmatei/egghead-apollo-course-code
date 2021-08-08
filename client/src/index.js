@@ -12,6 +12,9 @@ import {
 import { ChakraProvider } from "@chakra-ui/react";
 import { BrowserRouter } from "react-router-dom";
 import { RetryLink } from "@apollo/client/link/retry";
+import { RestLink } from "apollo-link-rest";
+
+const restLink = new RestLink({ uri: "http://localhost:4000/rest-api" });
 
 const httpLink = new HttpLink({
   uri: "http://localhost:4000/graphql",
@@ -71,7 +74,7 @@ const cache = new InMemoryCache({
 
 const client = new ApolloClient({
   cache,
-  link: from([retryLink, httpLink]),
+  link: from([retryLink, restLink, httpLink]),
 });
 ReactDOM.render(
   <React.StrictMode>

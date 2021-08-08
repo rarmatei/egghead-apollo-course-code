@@ -7,6 +7,24 @@ import { DeleteButton } from "./shared-ui/DeleteButton";
 import { UiLoadMoreButton } from "./shared-ui/UiLoadMoreButton";
 import { toggleNote } from "./index";
 
+const REST_ALL_NOTES_QUERY = gql`
+  query GetAllNotes($categoryId: String, $offset: Int, $limit: Int) {
+    notes(categoryId: $categoryId, offset: $offset, limit: $limit)
+      @rest(
+        type: "Note"
+        path: "/notes?categoryId={args.categoryId}&offset={args.offset}&limit={args.limit}"
+      ) {
+      id
+      content
+      isSelected @client
+      category {
+        id
+        label
+      }
+    }
+  }
+`;
+
 const ALL_NOTES_QUERY = gql`
   query GetAllNotes($categoryId: String, $offset: Int, $limit: Int) {
     notes(categoryId: $categoryId, offset: $offset, limit: $limit) {
@@ -16,6 +34,22 @@ const ALL_NOTES_QUERY = gql`
       category {
         id
         label
+      }
+    }
+  }
+`;
+
+const REST_DELETE_NOTE_MUTATION = gql`
+  mutation DeleteNote($noteId: String!) {
+    deleteNote(id: $noteId)
+      @rest(
+        type: "DeleteNoteResponse"
+        path: "/notes/{args.id}"
+        method: "DELETE"
+      ) {
+      successful
+      note @type(name: "Note") {
+        id
       }
     }
   }
@@ -33,7 +67,7 @@ const DELETE_NOTE_MUTATION = gql`
 `;
 
 export function NoteList({ categoryId }) {
-  const { data, loading, error, fetchMore } = useQuery(ALL_NOTES_QUERY, {
+  const { data, loading, error, fetchMore } = useQuery(REST_ALL_NOTES_QUERY, {
     variables: {
       categoryId,
       offset: 0,
@@ -42,7 +76,7 @@ export function NoteList({ categoryId }) {
     errorPolicy: "all",
   });
 
-  const [deleteNote] = useMutation(DELETE_NOTE_MUTATION, {
+  const [deleteNote] = useMutation(REST_DELETE_NOTE_MUTATION, {
     // refetchQueries: ["GetAllNotes"],
     optimisticResponse: (vars) => {
       return {
@@ -61,6 +95,7 @@ export function NoteList({ categoryId }) {
       const deletedNoteIdentifier = cache.identify(
         element.data?.deleteNote.note
       );
+      console.log({ deletedNoteIdentifier, element });
       cache.modify({
         fields: {
           notes(existingNotes) {
