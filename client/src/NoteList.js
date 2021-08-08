@@ -148,8 +148,9 @@ export function NoteList({ categoryId }) {
         const newNote = subscriptionData.data.newSharedNote;
         client.cache.modify({
           fields: {
-            notes: (existingNotes) => {
-              return [newNote, ...existingNotes];
+            notes: (existingNotes, helpers) => {
+              const newNoteRef = helpers.toReference(newNote);
+              return [newNoteRef, ...existingNotes];
             },
           },
         });
