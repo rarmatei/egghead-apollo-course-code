@@ -25,17 +25,9 @@ const retryLink = new RetryLink({
   },
 });
 
-// let selectedNoteIds = ["1", "2"];
-const selectedNoteIds = makeVar(["1", "2"]);
-
-// to read
-console.log(selectedNoteIds());
-
-// to set
-selectedNoteIds(["1"]);
+const selectedNoteIds = makeVar([]);
 
 export function toggleNote(noteId, isSelected) {
-  console.log("before: ", selectedNoteIds());
   if (isSelected) {
     selectedNoteIds([...selectedNoteIds(), noteId]);
   } else {
@@ -43,7 +35,6 @@ export function toggleNote(noteId, isSelected) {
       selectedNoteIds().filter((selectedNoteId) => selectedNoteId !== noteId)
     );
   }
-  console.log("after: ", selectedNoteIds());
 }
 
 const cache = new InMemoryCache({
