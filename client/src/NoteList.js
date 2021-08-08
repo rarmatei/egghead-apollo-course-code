@@ -117,18 +117,23 @@ export function NoteList({ categoryId }) {
     },
   });
 
-  const { data: newNoteData } = useSubscription(gql`
-    subscription NewSharedNote($categoryId: String) {
-      newSharedNote(categoryId: $categoryId) {
-        id
-        content
-        category {
+  const { data: newNoteData } = useSubscription(
+    gql`
+      subscription NewSharedNote($categoryId: String) {
+        newSharedNote(categoryId: $categoryId) {
           id
-          label
+          content
+          category {
+            id
+            label
+          }
         }
       }
+    `,
+    {
+      variables: { categoryId },
     }
-  `);
+  );
   const newNote = newNoteData?.newSharedNote;
   let recentChanges = null;
   if (newNote) {
