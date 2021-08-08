@@ -146,9 +146,10 @@ export function NoteList({ categoryId }) {
       variables: { categoryId },
       updateQuery: (previousQueryResult, { subscriptionData }) => {
         const newNote = subscriptionData.data.newSharedNote;
+        const currentNotesQuery = `notes:{"categoryId":"${categoryId}"}`;
         client.cache.modify({
           fields: {
-            notes: (existingNotes, helpers) => {
+            [currentNotesQuery]: (existingNotes, helpers) => {
               const newNoteRef = helpers.toReference(newNote);
               return [newNoteRef, ...existingNotes];
             },

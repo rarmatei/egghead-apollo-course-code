@@ -16,6 +16,7 @@ import { RetryLink } from "@apollo/client/link/retry";
 import { RestLink } from "apollo-link-rest";
 import { WebSocketLink } from "@apollo/client/link/ws";
 import { getMainDefinition } from "@apollo/client/utilities";
+import { persistCache, LocalStorageWrapper } from "apollo3-cache-persist";
 
 const restLink = new RestLink({ uri: "http://localhost:4000/rest-api" });
 
@@ -88,19 +89,24 @@ const cache = new InMemoryCache({
   },
 });
 
-const client = new ApolloClient({
+persistCache({
   cache,
-  link: from([retryLink, restLink, protocolLink]),
+  storage: new LocalStorageWrapper(window.localStorage),
+}).then(() => {
+  const client = new ApolloClient({
+    cache,
+    link: from([retryLink, restLink, protocolLink]),
+  });
+  ReactDOM.render(
+    <React.StrictMode>
+      <ChakraProvider>
+        <ApolloProvider client={client}>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </ApolloProvider>
+      </ChakraProvider>
+    </React.StrictMode>,
+    document.getElementById("root")
+  );
 });
-ReactDOM.render(
-  <React.StrictMode>
-    <ChakraProvider>
-      <ApolloProvider client={client}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </ApolloProvider>
-    </ChakraProvider>
-  </React.StrictMode>,
-  document.getElementById("root")
-);

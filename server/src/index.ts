@@ -43,41 +43,64 @@ const typeDefs = gql`
 `;
 
 let categories = [
-  { id: "1", label: "🛒 Shopping" },
-  { id: "2", label: "💭 Random thoughts" },
-  { id: "3", label: "✈️ Holiday Planning" },
+  { id: "1", label: "✈️ Holiday Planning" },
+  { id: "2", label: "🛒 Shopping" },
+  { id: "3", label: "📝 Saved articles" },
 ];
 
 let allNotes = [
-  { id: "1", content: "Shopping list item: 🍋 Lemons", categoryId: "1" },
-  { id: "2", content: "Shopping list item:  🥑 Avocados", categoryId: "1" },
   {
-    id: "9",
+    id: "1",
     content:
-      "✈️ Italy trip ideas: A day in Milan opens up a grand Gothic Duomo (cathedral), Leonardo Da Vinci's Last Supper and world-class opera at La Scala. A short train ride away, belle époque Lake Maggiore harbours the beguiling Borromean Islands...",
-    categoryId: "3",
+      "🇮🇹 Italy trip ideas: Santa Maria del Fiore was built on the site of Florence's second cathedral dedicated to Saint Reparata;[2] the first was the Basilica di San Lorenzo di Firenze, the first building of which was consecrated as a church in 393 by St. Ambrose...",
+    categoryId: "1",
+  },
+
+  {
+    id: "2",
+    content:
+      "🛫 Flight details: flying out of Manchester --> landing in Florence.",
+    categoryId: "1",
   },
   {
+    id: "3",
+    content:
+      "😋 🥘 Great places to eat in Florence: 'Osteria Antica Casa Torre', Piazza Di San Pier Maggiore 7, R, 50122 Firenze",
+    categoryId: "1",
+  },
+  {
+    id: "4",
+    content:
+      "🍨 Delicious gelato: 'Gelateria dei Neri', Via dei Neri, 9/11R, 50122 Firenze",
+    categoryId: "1",
+  },
+  {
+    id: "5",
+    content:
+      "🚲 Bike rental places: 'Florent - Bike rental', Via della Mosca, 10r, 50122 Firenze",
+    categoryId: "1",
+  },
+  {
+    id: "6",
+    content:
+      "📅 Train schedules on last day: 13:50 Platform 1, Florence Station --> Train to Rome",
+    categoryId: "1",
+  },
+  { id: "7", content: "Shopping list: 🍋 Lemons", categoryId: "1" },
+  { id: "8", content: "Shopping list:  🥑 Avocados", categoryId: "1" },
+  { id: "9", content: "Shopping list:  🍞 Bread", categoryId: "1" },
+  {
     id: "10",
-    content: "Book Italy flight.",
-    categoryId: "3",
+    content:
+      "🐦 The Sapphire-throated hummingbird: The sapphire-throated hummingbird is part of the order Apodiformes, which includes the hummingbirds, swifts and treeswifts. They are part of the family Trochilidae, also known as the hummingbirds, which are distinguished by their small size, high metabolism and extremely rapid wing-flapping. Although part of the same genus, the sapphire-throated hummingbird is taxonomically-closer related to the blue-headed sapphire (Chrysuronia grayi) than the shining-green hummingbird.[7] Additionally, the sapphire-throated hummingbird acts as an outgroup for some members of the genus Amazilia, such as the white-chested emerald (Amazilia brevirostris) and the plain-bellied emerald (Amazilia leucogaster)...",
+    categoryId: "1",
   },
   {
     id: "11",
-    content: "Book return flights.",
-    categoryId: "3",
-  },
-  {
-    id: "14",
     content:
-      "🍾 Ideas for wedding venues: Set within the beautiful surroundings of Bellahouston Park, House for an Art Lover is a truly unique wedding venue in Glasgow. Their exclusive-use Mackintosh Suite is inspired by Scotland’s most beloved artist, Charles Rennie Mackintosh, and is full of photo-worthy spots. ",
+      "⚛️ Neutron star: A neutron star is the collapsed core of a massive supergiant star, which had a total mass of between 10 and 25 solar masses, possibly more if the star was especially metal-rich.[1] Except for black holes, and some hypothetical objects (e.g. white holes, quark stars, and strange stars), neutron stars are the smallest and densest currently known class of stellar objects.[2] Neutron stars have a radius on the order of 10 kilometres (6.2 mi) and a mass of about 1.4 solar masses.[3] They result from the supernova explosion of a massive star, combined with gravitational collapse, that compresses the core past white dwarf star density to that of atomic nuclei....",
     categoryId: "1",
   },
-  { id: "3", content: "Shopping list item:  131231313212", categoryId: "1" },
-  { id: "4", content: "Shopping list item:  dadad", categoryId: "1" },
-  { id: "5", content: "Shopping list item:  adadads", categoryId: "1" },
-  { id: "6", content: "Shopping list item:  asdadad", categoryId: "1" },
-  { id: "7", content: "Shopping list item:  gsfgsfgsfgsfgs", categoryId: "1" },
 ];
 
 const resolvers = {
@@ -210,16 +233,16 @@ let unpublishedSharedNotes = [
 // }, 12000);
 
 // For subscription lesson
-setInterval(() => {
-  if (unpublishedSharedNotes.length === 0) {
-    return;
-  }
-  const newNote = unpublishedSharedNotes.shift();
-  allNotes.unshift(newNote);
-  pubsub.publish("NEW_SHARED_NOTE", {
-    newSharedNote: newNote,
-  });
-}, 8000);
+// setInterval(() => {
+//   if (unpublishedSharedNotes.length === 0) {
+//     return;
+//   }
+//   const newNote = unpublishedSharedNotes.shift();
+//   allNotes.unshift(newNote);
+//   pubsub.publish("NEW_SHARED_NOTE", {
+//     newSharedNote: newNote,
+//   });
+// }, 8000);
 
 (async function () {
   const app = express();
