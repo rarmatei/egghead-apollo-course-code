@@ -47,6 +47,13 @@ const cache = new InMemoryCache({
             return [...existing, ...incoming];
           },
         },
+        note(valueInCache, helpers) {
+          const noteId = helpers.args.id;
+          return helpers.toReference({
+            id: noteId,
+            __typename: "Note",
+          });
+        },
       },
     },
     Note: {
