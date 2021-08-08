@@ -195,31 +195,31 @@ let unpublishedSharedNotes = [
 ];
 
 //For polling lesson
-setTimeout(() => {
-  categories.push({
-    id: "4",
-    label: "👶 Childcare",
-  });
-}, 8000);
-
-setTimeout(() => {
-  categories.push({
-    id: "5",
-    label: "💻 Work",
-  });
-}, 12000);
-
-// For subscription lesson
-// setInterval(() => {
-//   if (unpublishedSharedNotes.length === 0) {
-//     return;
-//   }
-//   const newNote = unpublishedSharedNotes.shift();
-//   allNotes.unshift(newNote);
-//   pubsub.publish("NEW_SHARED_NOTE", {
-//     newSharedNote: newNote,
+// setTimeout(() => {
+//   categories.push({
+//     id: "4",
+//     label: "👶 Childcare",
 //   });
 // }, 8000);
+//
+// setTimeout(() => {
+//   categories.push({
+//     id: "5",
+//     label: "💻 Work",
+//   });
+// }, 12000);
+
+// For subscription lesson
+setInterval(() => {
+  if (unpublishedSharedNotes.length === 0) {
+    return;
+  }
+  const newNote = unpublishedSharedNotes.shift();
+  allNotes.unshift(newNote);
+  pubsub.publish("NEW_SHARED_NOTE", {
+    newSharedNote: newNote,
+  });
+}, 8000);
 
 (async function () {
   const app = express();

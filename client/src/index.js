@@ -8,17 +8,33 @@ import {
   HttpLink,
   InMemoryCache,
   makeVar,
+  split,
 } from "@apollo/client";
 import { ChakraProvider } from "@chakra-ui/react";
 import { BrowserRouter } from "react-router-dom";
 import { RetryLink } from "@apollo/client/link/retry";
 import { RestLink } from "apollo-link-rest";
+import { WebSocketLink } from "@apollo/client/link/ws";
+import { getMainDefinition } from "@apollo/client/utilities";
 
 const restLink = new RestLink({ uri: "http://localhost:4000/rest-api" });
 
 const httpLink = new HttpLink({
   uri: "http://localhost:4000/graphql",
 });
+
+const wsLink = new WebSocketLink({
+  uri: "ws://localhost:4000/graphql",
+});
+
+const protocolLink = split(
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    return definition.operation === "subscription";
+  },
+  wsLink,
+  httpLink
+);
 
 const retryLink = new RetryLink({
   delay: {
@@ -74,7 +90,7 @@ const cache = new InMemoryCache({
 
 const client = new ApolloClient({
   cache,
-  link: from([retryLink, restLink, httpLink]),
+  link: from([retryLink, restLink, protocolLink]),
 });
 ReactDOM.render(
   <React.StrictMode>

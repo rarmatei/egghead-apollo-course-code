@@ -1,5 +1,12 @@
-import { gql, useMutation, useQuery } from "@apollo/client";
-import { Checkbox, Heading, Spinner, Stack, Text } from "@chakra-ui/react";
+import { gql, useMutation, useQuery, useSubscription } from "@apollo/client";
+import {
+  Checkbox,
+  Divider,
+  Heading,
+  Spinner,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import { UiNote } from "./shared-ui/UiNote";
 import { ViewNoteButton } from "./shared-ui/ViewButton";
 import { Link } from "react-router-dom";
@@ -95,7 +102,6 @@ export function NoteList({ categoryId }) {
       const deletedNoteIdentifier = cache.identify(
         element.data?.deleteNote.note
       );
-      console.log({ deletedNoteIdentifier, element });
       cache.modify({
         fields: {
           notes(existingNotes) {
@@ -111,6 +117,33 @@ export function NoteList({ categoryId }) {
     },
   });
 
+  const { data: newNoteData } = useSubscription(gql`
+    subscription NewSharedNote($categoryId: String) {
+      newSharedNote(categoryId: $categoryId) {
+        id
+        content
+        category {
+          id
+          label
+        }
+      }
+    }
+  `);
+  const newNote = newNoteData?.newSharedNote;
+  let recentChanges = null;
+  if (newNote) {
+    recentChanges = (
+      <>
+        <Text>Recent changes: </Text>
+        <UiNote
+          category={newNote.category.label}
+          content={newNote.content}
+        ></UiNote>
+        <Divider />
+      </>
+    );
+  }
+
   if (error && !data) {
     return <Heading>Could not load notes.</Heading>;
   }
@@ -119,6 +152,7 @@ export function NoteList({ categoryId }) {
   }
   return (
     <Stack spacing={4}>
+      {recentChanges}
       {data.notes
         .filter((note) => !!note)
         .map((note) => (
