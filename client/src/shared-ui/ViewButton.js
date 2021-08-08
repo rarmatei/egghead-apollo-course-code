@@ -3,7 +3,7 @@ import { Button } from "@chakra-ui/react";
 
 export function ViewNoteButton() {
   return (
-    <Button size="xs" colorScheme="blue" leftIcon={<EditIcon />}>
+    <Button width="100%" size="xs" colorScheme="blue" leftIcon={<EditIcon />}>
       View
     </Button>
   );

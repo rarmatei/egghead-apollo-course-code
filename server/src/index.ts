@@ -73,6 +73,11 @@ let allNotes = [
       "🍾 Ideas for wedding venues: Set within the beautiful surroundings of Bellahouston Park, House for an Art Lover is a truly unique wedding venue in Glasgow. Their exclusive-use Mackintosh Suite is inspired by Scotland’s most beloved artist, Charles Rennie Mackintosh, and is full of photo-worthy spots. ",
     categoryId: "1",
   },
+  { id: "3", content: "Shopping list item:  🥑 Avocados", categoryId: "1" },
+  { id: "4", content: "Shopping list item:  dadad", categoryId: "1" },
+  { id: "5", content: "Shopping list item:  adadads", categoryId: "1" },
+  { id: "6", content: "Shopping list item:  asdadad", categoryId: "1" },
+  { id: "7", content: "Shopping list item:  gsfgsfgsfgsfgs", categoryId: "1" },
 ];
 
 const resolvers = {

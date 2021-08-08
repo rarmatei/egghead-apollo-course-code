@@ -10,7 +10,7 @@ export function UiNote({ isSelected, content, category, children }) {
       borderWidth="3px"
     >
       <Flex h="100%" justify="space-between">
-        <Stack>
+        <Stack paddingRight={5}>
           <Text>{content}</Text>
           {category && (
             <Flex>
