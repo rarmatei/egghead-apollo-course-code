@@ -7,6 +7,7 @@ import {
   from,
   HttpLink,
   InMemoryCache,
+  makeVar,
 } from "@apollo/client";
 import { ChakraProvider } from "@chakra-ui/react";
 import { BrowserRouter } from "react-router-dom";
@@ -24,7 +25,26 @@ const retryLink = new RetryLink({
   },
 });
 
-let selectedNoteIds = ["1", "2"];
+// let selectedNoteIds = ["1", "2"];
+const selectedNoteIds = makeVar(["1", "2"]);
+
+// to read
+console.log(selectedNoteIds());
+
+// to set
+selectedNoteIds(["1"]);
+
+export function toggleNote(noteId, isSelected) {
+  console.log("before: ", selectedNoteIds());
+  if (isSelected) {
+    selectedNoteIds([...selectedNoteIds(), noteId]);
+  } else {
+    selectedNoteIds(
+      selectedNoteIds().filter((selectedNoteId) => selectedNoteId !== noteId)
+    );
+  }
+  console.log("after: ", selectedNoteIds());
+}
 
 const cache = new InMemoryCache({
   typePolicies: {
@@ -43,8 +63,7 @@ const cache = new InMemoryCache({
         isSelected: {
           read(currentIsSelectedValue, helpers) {
             const currentNoteId = helpers.readField("id");
-            console.log({ currentNoteId });
-            return selectedNoteIds.includes(currentNoteId);
+            return selectedNoteIds().includes(currentNoteId);
           },
         },
       },

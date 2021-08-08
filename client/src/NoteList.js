@@ -5,6 +5,7 @@ import { ViewNoteButton } from "./shared-ui/ViewButton";
 import { Link } from "react-router-dom";
 import { DeleteButton } from "./shared-ui/DeleteButton";
 import { UiLoadMoreButton } from "./shared-ui/UiLoadMoreButton";
+import { toggleNote } from "./index";
 
 const ALL_NOTES_QUERY = gql`
   query GetAllNotes($categoryId: String, $offset: Int, $limit: Int) {
@@ -91,7 +92,12 @@ export function NoteList({ categoryId }) {
             category={note.category.label}
             content={note.content}
           >
-            <Checkbox isChecked={note.isSelected}>Select</Checkbox>
+            <Checkbox
+              onChange={(e) => toggleNote(note.id, e.target.checked)}
+              isChecked={note.isSelected}
+            >
+              Select
+            </Checkbox>
             <Link to={`/note/${note.id}`}>
               <ViewNoteButton />
             </Link>

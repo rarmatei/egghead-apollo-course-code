@@ -12,6 +12,7 @@ export function EditNote() {
         note(id: $id) {
           id
           content
+          isSelected @client
         }
       }
     `,
@@ -38,7 +39,7 @@ export function EditNote() {
     <UiEditNote
       note={data?.note}
       isSaving={loading}
-      isNoteSelected={false}
+      isNoteSelected={data?.note.isSelected}
       onSave={(content) => updateNote({ variables: { content, id: noteId } })}
     />
   );
