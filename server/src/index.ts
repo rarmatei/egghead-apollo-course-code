@@ -194,6 +194,21 @@ let unpublishedSharedNotes = [
   },
 ];
 
+//For polling lesson
+setTimeout(() => {
+  categories.push({
+    id: "4",
+    label: "👶 Childcare",
+  });
+}, 8000);
+
+setTimeout(() => {
+  categories.push({
+    id: "5",
+    label: "💻 Work",
+  });
+}, 12000);
+
 // For subscription lesson
 // setInterval(() => {
 //   if (unpublishedSharedNotes.length === 0) {

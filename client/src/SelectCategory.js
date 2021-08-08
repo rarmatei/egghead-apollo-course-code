@@ -12,7 +12,9 @@ export const ALL_CATEGORIES_QUERY = gql`
 `;
 
 export function SelectCategory({ onCategoryChange, value }) {
-  const { data } = useQuery(ALL_CATEGORIES_QUERY);
+  const { data } = useQuery(ALL_CATEGORIES_QUERY, {
+    pollInterval: 1000,
+  });
 
   return (
     <Select

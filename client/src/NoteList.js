@@ -67,7 +67,7 @@ const DELETE_NOTE_MUTATION = gql`
 `;
 
 export function NoteList({ categoryId }) {
-  const { data, loading, error, fetchMore } = useQuery(REST_ALL_NOTES_QUERY, {
+  const { data, loading, error, fetchMore } = useQuery(ALL_NOTES_QUERY, {
     variables: {
       categoryId,
       offset: 0,
@@ -76,7 +76,7 @@ export function NoteList({ categoryId }) {
     errorPolicy: "all",
   });
 
-  const [deleteNote] = useMutation(REST_DELETE_NOTE_MUTATION, {
+  const [deleteNote] = useMutation(DELETE_NOTE_MUTATION, {
     // refetchQueries: ["GetAllNotes"],
     optimisticResponse: (vars) => {
       return {
