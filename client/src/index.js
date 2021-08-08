@@ -36,6 +36,15 @@ const cache = new InMemoryCache({
         },
       },
     },
+    Note: {
+      fields: {
+        isSelected: {
+          read() {
+            return true;
+          },
+        },
+      },
+    },
   },
 });
 

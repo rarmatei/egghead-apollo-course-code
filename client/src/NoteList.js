@@ -11,6 +11,7 @@ const ALL_NOTES_QUERY = gql`
     notes(categoryId: $categoryId, offset: $offset, limit: $limit) {
       id
       content
+      isSelected @client
       category {
         id
         label
@@ -90,7 +91,7 @@ export function NoteList({ categoryId }) {
             category={note.category.label}
             content={note.content}
           >
-            <Checkbox>Select</Checkbox>
+            <Checkbox isChecked={note.isSelected}>Select</Checkbox>
             <Link to={`/note/${note.id}`}>
               <ViewNoteButton />
             </Link>
