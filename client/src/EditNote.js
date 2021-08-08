@@ -38,6 +38,7 @@ export function EditNote() {
     <UiEditNote
       note={data?.note}
       isSaving={loading}
+      isNoteSelected={false}
       onSave={(content) => updateNote({ variables: { content, id: noteId } })}
     />
   );

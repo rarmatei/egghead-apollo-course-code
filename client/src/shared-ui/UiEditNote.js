@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { UiNotFound } from "./UiNotFound";
 
-function UiEditNote({ note, onSave, isSaving }) {
+function UiEditNote({ note, onSave, isSaving, isNoteSelected }) {
   function save(e) {
     e.preventDefault();
     const newContent = e.target.elements.noteContents.value;
@@ -29,6 +29,7 @@ function UiEditNote({ note, onSave, isSaving }) {
       </Heading>
       <form onSubmit={save}>
         <Textarea key={note.id} id="noteContents" defaultValue={note.content} />
+        <Text padding="10px 0">Selected: {isNoteSelected ? "yes" : "no"}</Text>
         <Button isLoading={isSaving} type="submit" colorScheme="blue">
           Save
         </Button>
