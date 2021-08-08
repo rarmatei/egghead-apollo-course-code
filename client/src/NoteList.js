@@ -4,10 +4,11 @@ import { UiNote } from "./shared-ui/UiNote";
 import { ViewNoteButton } from "./shared-ui/ViewButton";
 import { Link } from "react-router-dom";
 import { DeleteButton } from "./shared-ui/DeleteButton";
+import { UiLoadMoreButton } from "./shared-ui/UiLoadMoreButton";
 
 const ALL_NOTES_QUERY = gql`
-  query GetAllNotes($categoryId: String) {
-    notes(categoryId: $categoryId) {
+  query GetAllNotes($categoryId: String, $offset: Int, $limit: Int) {
+    notes(categoryId: $categoryId, offset: $offset, limit: $limit) {
       id
       content
       category {
@@ -30,9 +31,11 @@ const DELETE_NOTE_MUTATION = gql`
 `;
 
 export function NoteList({ categoryId }) {
-  const { data, loading, error } = useQuery(ALL_NOTES_QUERY, {
+  const { data, loading, error, fetchMore } = useQuery(ALL_NOTES_QUERY, {
     variables: {
       categoryId,
+      offset: 0,
+      limit: 3,
     },
     errorPolicy: "all",
   });
@@ -99,6 +102,9 @@ export function NoteList({ categoryId }) {
             />
           </UiNote>
         ))}
+      <UiLoadMoreButton
+        onClick={() => fetchMore({ variables: { offset: data.notes.length } })}
+      />
     </Stack>
   );
 }

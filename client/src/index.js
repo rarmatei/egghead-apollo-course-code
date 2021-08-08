@@ -24,8 +24,23 @@ const retryLink = new RetryLink({
   },
 });
 
+const cache = new InMemoryCache({
+  typePolicies: {
+    Query: {
+      fields: {
+        notes: {
+          keyArgs: ["categoryId"],
+          merge(existing = [], incoming) {
+            return [...existing, ...incoming];
+          },
+        },
+      },
+    },
+  },
+});
+
 const client = new ApolloClient({
-  cache: new InMemoryCache(),
+  cache,
   link: from([retryLink, httpLink]),
 });
 ReactDOM.render(
