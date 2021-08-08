@@ -213,8 +213,8 @@ let unpublishedSharedNotes = [
 
   restRouter.get("/notes", (req, res, next) => {
     const categoryId = req.query["categoryId"];
-    const offset = req.query["offset"];
-    const limit = req.query["limit"];
+    const offset = parseInt(req.query["offset"]);
+    const limit = parseInt(req.query["limit"]);
     const categorisedNotes = categoryId
       ? allNotes.filter((note) => note.categoryId === categoryId)
       : allNotes;
