@@ -46,6 +46,8 @@ stale and falsy data.
 In this course, we'll be building a collaborative note-taking application. Users will be able to either make quick edits to a running list of notes
 or explore specific notes in more detail, getting access to more specialised text editing functions.
 
+![App Screenshot](app_screenshot.png)
+
 Towards the end of the course we'll be adding a "collaborative" layer to the app, where we'll subscribe (via websocket) to updates from other users
 and integrate those into our notes.
 
