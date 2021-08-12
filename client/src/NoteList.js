@@ -143,16 +143,19 @@ export function NoteList({ categoryId }) {
           }
         }
       `,
+
       variables: { categoryId },
       updateQuery: (previousQueryResult, { subscriptionData }) => {
         const newNote = subscriptionData.data.newSharedNote;
-        const currentNotesQuery = `notes:{"categoryId":"${categoryId}"}`;
-        client.cache.modify({
-          fields: {
-            [currentNotesQuery]: (existingNotes, helpers) => {
-              const newNoteRef = helpers.toReference(newNote);
-              return [newNoteRef, ...existingNotes];
-            },
+        client.cache.writeQuery({
+          query: ALL_NOTES_QUERY,
+          overwrite: true,
+          variables: {
+            categoryId,
+          },
+          data: {
+            ...previousQueryResult,
+            notes: [newNote, ...previousQueryResult.notes],
           },
         });
       },
