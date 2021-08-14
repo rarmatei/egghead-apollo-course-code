@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import { UiEditNote } from "./shared-ui/UiEditNote";
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { Spinner } from "@chakra-ui/react";
 
 export function EditNote() {
   let { noteId } = useParams();
