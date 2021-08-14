@@ -189,7 +189,7 @@ const resolvers = {
   },
 };
 
-let unpublishedSharedNotes = [
+let unpublishedNotes = [
   {
     id: "11",
     content: "From Kate - Christmas shopping list: tree 🎄",
@@ -205,32 +205,21 @@ let unpublishedSharedNotes = [
     content: "From Rares - Apollo course lesson 1 draft",
     categoryId: "2",
   },
-  {
-    id: "15",
-    content: "From Shirley - This is the poem I wrote for tomorrow...",
-    categoryId: "2",
-  },
-  {
-    id: "16",
-    content: "From Troy - Spanish project with Abed",
-    categoryId: "3",
-  },
+];
+
+let unpublishedCategories = [
+  { id: "4", label: "👶 Childcare" },
+  { id: "5", label: "💻 Work" },
 ];
 
 //For polling lesson
-// setTimeout(() => {
-//   categories.push({
-//     id: "4",
-//     label: "👶 Childcare",
-//   });
+// setInterval(() => {
+//   if (unpublishedCategories.length === 0) {
+//     return;
+//   }
+//   const newCategory = unpublishedCategories.shift();
+//   categories.unshift(newCategory);
 // }, 8000);
-//
-// setTimeout(() => {
-//   categories.push({
-//     id: "5",
-//     label: "💻 Work",
-//   });
-// }, 12000);
 
 // For subscription lesson
 // setInterval(() => {
