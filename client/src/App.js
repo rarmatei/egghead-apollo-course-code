@@ -1,4 +1,4 @@
-import { Grid, GridItem } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import { MainNotesContainer } from "./MainNotesContainer";
 import { UiAppMainHeader } from "./shared-ui/UiAppMainHeader";
 import { Route } from "react-router-dom";
@@ -8,16 +8,16 @@ function App() {
   return (
     <>
       <UiAppMainHeader />
-      <Grid templateRows="repeat(2, 1fr)" templateColumns="repeat(2, 1fr)">
-        <GridItem padding="10px">
+      <Flex padding="10px" alignItems="flex-start">
+        <Box>
           <MainNotesContainer />
-        </GridItem>
-        <GridItem padding="10px">
+        </Box>
+        <Box paddingLeft="30px" width="450px">
           <Route path={`/note/:noteId`}>
             <EditNote />
           </Route>
-        </GridItem>
-      </Grid>
+        </Box>
+      </Flex>
     </>
   );
 }
