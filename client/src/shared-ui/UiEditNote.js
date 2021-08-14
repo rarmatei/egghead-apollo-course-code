@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Checkbox,
-  Heading,
-  Text,
-  Textarea,
-} from "@chakra-ui/react";
+import { Box, Button, Heading, Text, Textarea } from "@chakra-ui/react";
 import { UiNotFound } from "./UiNotFound";
 
 function UiEditNote({ note, onSave, isSaving, isNoteSelected }) {

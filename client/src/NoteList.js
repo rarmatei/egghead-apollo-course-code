@@ -1,18 +1,5 @@
-import {
-  gql,
-  useApolloClient,
-  useMutation,
-  useQuery,
-  useSubscription,
-} from "@apollo/client";
-import {
-  Checkbox,
-  Divider,
-  Heading,
-  Spinner,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
+import { gql, useApolloClient, useMutation, useQuery } from "@apollo/client";
+import { Checkbox, Heading, Spinner, Stack } from "@chakra-ui/react";
 import { UiNote } from "./shared-ui/UiNote";
 import { ViewNoteButton } from "./shared-ui/ViewButton";
 import { Link } from "react-router-dom";

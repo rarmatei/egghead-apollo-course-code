@@ -1,5 +1,4 @@
 import { Box, Collapse } from "@chakra-ui/react";
-import { EditCategories } from "../EditCategories";
 
 function UiCollapse({ isOpen, children }) {
   return (

@@ -13,7 +13,7 @@ function UiEditCategories({ categories, onEditCategory }) {
   const { isOpen, onToggle } = useDisclosure();
   function saveCategory(e, id) {
     e.preventDefault();
-    const label = e.target.elements.categoryLabel.value;
+    const label = e.target.elements[`categoryLabel-${id}`].value;
     onEditCategory({ id, label });
   }
   return (
@@ -30,7 +30,7 @@ function UiEditCategories({ categories, onEditCategory }) {
             >
               <Flex marginBottom="10px">
                 <Input
-                  id="categoryLabel"
+                  id={`categoryLabel-${category.id}`}
                   background="white"
                   defaultValue={category.label}
                 ></Input>
